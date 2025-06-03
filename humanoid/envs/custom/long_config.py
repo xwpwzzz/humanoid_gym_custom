@@ -273,7 +273,7 @@ class long_configPPO(LeggedRobotCfgPPO):
 
     class algorithm(LeggedRobotCfgPPO.algorithm):
         entropy_coef = 0.001
-        learning_rate = 1e-4
+        learning_rate = 1e-5
         num_learning_epochs = 2
         gamma = 0.994
         lam = 0.9
@@ -283,7 +283,7 @@ class long_configPPO(LeggedRobotCfgPPO):
         policy_class_name = 'ActorCritic'
         algorithm_class_name = 'PPO'
         num_steps_per_env = 60  # per iteration
-        max_iterations = 3000  # number of policy updates
+        max_iterations = 30001  # number of policy updates
 
         # logging
         save_interval = 1000  # Please check for potential savings every `save_interval` iterations.
