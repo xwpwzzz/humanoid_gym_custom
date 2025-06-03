@@ -3,4 +3,4 @@
 /workspace.xml
 *.pt
 *.0
-logs/
+logs/*
