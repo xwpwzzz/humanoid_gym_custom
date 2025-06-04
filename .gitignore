@@ -3,6 +3,6 @@
 /workspace.xml
 *.pt
 *.0
-logs/
+logs/*
 !logs/.gitkeep
 humanoid/wandb/
