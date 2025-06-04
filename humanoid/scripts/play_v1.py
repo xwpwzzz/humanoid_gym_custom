@@ -1,3 +1,4 @@
+#TODO : change camera to fixed
 
 import os
 import cv2
@@ -17,7 +18,6 @@ import time
 
 
 def play(args):
-    
     env_cfg, train_cfg = task_registry.get_cfgs(name=args.task)
     # override some parameters for testing
     env_cfg.env.num_envs = min(env_cfg.env.num_envs, 1)
@@ -34,21 +34,19 @@ def play(args):
     env_cfg.noise.curriculum = False
     env_cfg.noise.noise_level = 0.5
 
+
     train_cfg.seed = 123145
     print("train_cfg.runner_class_name:", train_cfg.runner_class_name)
 
     # prepare environment
     env, _ = task_registry.make_env(name=args.task, args=args, env_cfg=env_cfg)
     env.set_camera(env_cfg.viewer.pos, env_cfg.viewer.lookat)
+
     obs = env.get_observations()
 
     # load policy
     train_cfg.runner.resume = True
-    ppo_runner, train_cfg = task_registry.make_alg_runner(
-        env=env, 
-        name=args.task, 
-        args=args, 
-        train_cfg=train_cfg)
+    ppo_runner, train_cfg = task_registry.make_alg_runner(env=env, name=args.task, args=args, train_cfg=train_cfg)
     policy = ppo_runner.get_inference_policy(device=env.device)
     
     # export policy as a jit module (used to run it from C++)
@@ -57,8 +55,10 @@ def play(args):
         export_policy_as_jit(ppo_runner.alg.actor_critic, path)
         print('Exported policy as jit script to: ', path)
 
-    # record video
-    #TODO add fix camera
+    logger = Logger(env.dt)
+    robot_index = 0 # which robot is used for logging
+    joint_index = 1 # which joint is used for logging
+    stop_state_log = 1200 # number of steps before plotting states
     if RENDER:
         camera_properties = gymapi.CameraProperties()
         camera_properties.width = 1920
@@ -84,10 +84,6 @@ def play(args):
             os.mkdir(experiment_dir)
         video = cv2.VideoWriter(dir, fourcc, 50.0, (1920, 1080))
 
-    logger = Logger(env.dt)
-    robot_index = 0 # which robot is used for logging
-    joint_index = 1 # which joint is used for logging
-    stop_state_log = 1200 # number of steps before plotting states
 
     for i in tqdm(range(stop_state_log)):
 
