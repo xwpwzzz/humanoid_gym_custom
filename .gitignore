@@ -5,4 +5,4 @@
 *.0
 logs/*
 !logs/.gitkeep
-humanoid/wandb/
+humanoid/wandb/*
