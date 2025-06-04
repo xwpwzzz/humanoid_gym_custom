@@ -16,7 +16,6 @@ from tqdm import tqdm
 from datetime import datetime
 import time
 
-
 def play(args):
     env_cfg, train_cfg = task_registry.get_cfgs(name=args.task)
     # override some parameters for testing
@@ -33,7 +32,6 @@ def play(args):
     env_cfg.domain_rand.joint_angle_noise = 0.
     env_cfg.noise.curriculum = False
     env_cfg.noise.noise_level = 0.5
-
 
     train_cfg.seed = 123145
     print("train_cfg.runner_class_name:", train_cfg.runner_class_name)
@@ -83,7 +81,6 @@ def play(args):
         if not os.path.exists(experiment_dir):
             os.mkdir(experiment_dir)
         video = cv2.VideoWriter(dir, fourcc, 50.0, (1920, 1080))
-
 
     for i in tqdm(range(stop_state_log)):
 
@@ -161,6 +158,15 @@ def play(args):
 
     logger.print_rewards()
     logger.plot_states()
+
+    if DATA_SAVED:
+        traj_path = os.path.join(LEGGED_GYM_ROOT_DIR,'traj',args.task,args.run_name)
+        if not os.path.exists(traj_path):
+            os.makedirs(traj_path)
+        log = logger.state_log
+        _dof_pos = np.array(log['dof_pos'])
+        np.save( traj_path + '/dof_pos.npy',_dof_pos)
+        
     time.sleep(600)
     
     if RENDER:
@@ -170,5 +176,6 @@ if __name__ == '__main__':
     EXPORT_POLICY = True
     RENDER = True
     FIX_COMMAND = True
+    DATA_SAVED = True
     args = get_args()
     play(args)

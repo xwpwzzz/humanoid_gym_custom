@@ -15,7 +15,6 @@ from tqdm import tqdm
 from datetime import datetime
 import time
 
-
 def play(args):
     
     env_cfg, train_cfg = task_registry.get_cfgs(name=args.task)
@@ -165,6 +164,7 @@ def play(args):
 
     logger.print_rewards()
     logger.plot_states()
+   
     time.sleep(600)
     
     if RENDER:
@@ -174,5 +174,6 @@ if __name__ == '__main__':
     EXPORT_POLICY = True
     RENDER = True
     FIX_COMMAND = True
+    
     args = get_args()
     play(args)
