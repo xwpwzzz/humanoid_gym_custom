@@ -38,12 +38,11 @@ from .custom.humanoid_config import XBotLCfg, XBotLCfgPPO
 from .custom.humanoid_env import XBotLFreeEnv
 from .custom.long_env import long_env
 from .custom.long_config import long_config, long_configPPO
-from .custom.long_jump_env import long_jump_env
-from .custom.long_jump_config import long_jump_config, long_jump_configPPO
+
 
 from humanoid.utils.task_registry import task_registry
 
 
 task_registry.register( "humanoid_ppo", XBotLFreeEnv, XBotLCfg(), XBotLCfgPPO() )
 task_registry.register( "long_ppo", long_env, long_config(), long_configPPO() )
-task_registry.register( "long_jump_ppo", long_jump_env, long_jump_config(), long_jump_configPPO() )
+

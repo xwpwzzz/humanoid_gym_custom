@@ -1,1 +1,1 @@
-custom humanoid_gym environment
+A pipeline to train humanoid robot under isaac gym and sim-to-sim to mujoco 
