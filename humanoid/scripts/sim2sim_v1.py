@@ -434,11 +434,9 @@ if __name__ == '__main__':
 
         class sim_config:
             if args.terrain:
-                mujoco_model_path = ('/home/robot18/gymloong/sim2sim/Humanoid-Gym-main/dynamic_test/mujoco_sim_v3.0'
-                                     '/Robot_12_Cloosedloop_v2/Robot_12_Cloosedloop_V02.xml')
+                mujoco_model_path = ('../../resources/robots/long/mujoco_model/Robot_12_Cloosedloop_V02.xml')
             else:
-                mujoco_model_path = ('/home/robot18/gymloong/sim2sim/Humanoid-Gym-main/dynamic_test/mujoco_sim_v3.0'
-                                     '/Robot_12_Cloosedloop_v2/Robot_12_Cloosedloop_V02.xml')
+                mujoco_model_path = ('../../resources/robots/long/mujoco_model/Robot_12_Cloosedloop_V02.xml')
             sim_duration = 500.0
             dt = 0.001
             decimation = 10

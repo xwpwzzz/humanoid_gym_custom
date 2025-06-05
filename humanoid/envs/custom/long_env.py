@@ -9,9 +9,7 @@ from humanoid.envs import LeggedRobot
 
 from humanoid.utils.terrain import HumanoidTerrain
 
-
 # from collections import deque
-
 
 class long_env(LeggedRobot):
     '''

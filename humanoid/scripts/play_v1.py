@@ -83,14 +83,8 @@ def play(args):
         video = cv2.VideoWriter(dir, fourcc, 50.0, (1920, 1080))
 
     for i in tqdm(range(stop_state_log)):
-
         actions = policy(obs.detach()) # * 0.
-        # with open('/home/robot18/gymloong/sim2sim/Humanoid-Gym-main/humanoid/scripts/isaac.txt', mode='a') as file:
-        #     for j in range(12):
-        #         file.write(str(actions.cpu().detach().numpy()[0][j]))
-        #         file.write(' ')
-        #     file.write('\n')
-        
+              
         if FIX_COMMAND:
             env.commands[:, 0] = 0.5    # 1.0
             env.commands[:, 1] = 0.
@@ -112,7 +106,7 @@ def play(args):
             {
                 'dof_pos_target': actions[robot_index, joint_index].item() * env.cfg.control.action_scale,
                 'dof_pos': env.dof_pos[robot_index, joint_index].item(),
-                # 画出位置跟踪曲线
+                
                 'dof_pos_target0': actions[robot_index, 0].item() * env.cfg.control.action_scale,
                 'dof_pos0': env.dof_pos[robot_index, 0].item(),
                 'dof_pos_target1': actions[robot_index, 1].item() * env.cfg.control.action_scale,
@@ -177,5 +171,7 @@ if __name__ == '__main__':
     RENDER = True
     FIX_COMMAND = True
     DATA_SAVED = True
+    FIXED_CAMERA = True
+
     args = get_args()
     play(args)

@@ -6,3 +6,5 @@
 logs/*
 !logs/.gitkeep
 humanoid/wandb/*
+humanoid/scripts/*
+!humanoid/scripts/.gitkeep

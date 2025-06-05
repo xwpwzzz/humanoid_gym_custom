@@ -1,32 +1,3 @@
-# SPDX-License-Identifier: BSD-3-Clause
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are met:
-#
-# 1. Redistributions of source code must retain the above copyright notice, this
-# list of conditions and the following disclaimer.
-#
-# 2. Redistributions in binary form must reproduce the above copyright notice,
-# this list of conditions and the following disclaimer in the documentation
-# and/or other materials provided with the distribution.
-#
-# 3. Neither the name of the copyright holder nor the names of its
-# contributors may be used to endorse or promote products derived from
-# this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-# Copyright (c) 2024 Beijing RobotEra TECHNOLOGY CO.,LTD. All rights reserved.
-
 
 from humanoid.envs.base.legged_robot_config import LeggedRobotCfg, LeggedRobotCfgPPO
 
@@ -42,11 +13,9 @@ class long_config(LeggedRobotCfg):
         num_single_obs = 47
         # num_single_obs = 41
         num_observations = int(frame_stack * num_single_obs)
-        single_num_privileged_obs = 73
-        # single_num_privileged_obs = 65
+        single_num_privileged_obs = 73        
         num_privileged_obs = int(c_frame_stack * single_num_privileged_obs)
-        num_actions = 12
-        # num_actions = 10
+        num_actions = 12        
         num_envs = 4096
         episode_length_s = 24  # episode length in seconds
         use_ref_actions = False
@@ -58,14 +27,10 @@ class long_config(LeggedRobotCfg):
         torque_limit = 0.85
 
     class asset(LeggedRobotCfg.asset):
-        file = ('../resources/robots/long/urdf/Robot_12_V02.urdf')
-
+        file = ('../../resources/robots/long/urdf/Robot_12_V02.urdf')
         name = "Robot_12_v02"
-        foot_name = "ankle_roll"
-        # foot_name = "ankle"
-        # knee_name = "knee"
+        foot_name = "ankle_roll"       
         knee_name = "knee"
-
         terminate_after_contacts_on = ['base_link']
         penalize_contacts_on = ["base_link"]
         self_collisions = 0  # 1 to disable, 0 to enable...bitwise filter
@@ -94,7 +59,6 @@ class long_config(LeggedRobotCfg):
     class noise:
         add_noise = True
         noise_level = 0.6    # scales other values
-
         class noise_scales:
             dof_pos = 0.05
             dof_vel = 0.5
@@ -105,7 +69,6 @@ class long_config(LeggedRobotCfg):
 
     class init_state(LeggedRobotCfg.init_state):
         pos = [0.0, 0.0, 1.09]
-
         default_joint_angles = {  # = target angles [rad] when action = 0.0
             'J_hip_l_roll': 0.,
             'J_hip_l_yaw': 0.,
@@ -119,7 +82,6 @@ class long_config(LeggedRobotCfg):
             'J_knee_pitch_r': 0.,
             'J_ankle_pitch_r': 0.,
             'J_ankle_roll_r': 0.,
-
         }
 
     class control(LeggedRobotCfg.control):
@@ -153,7 +115,6 @@ class long_config(LeggedRobotCfg):
             'J_ankle_pitch_r': 1.2,
             'J_ankle_roll_r': 1.2,
         }
-
         # action scale: target angle = actionScale * action + defaultAngle
         action_scale = 1.0
         # decimation: Number of control action updates @ sim DT per policy DT
@@ -163,7 +124,6 @@ class long_config(LeggedRobotCfg):
         dt = 0.001  # 1000 Hz
         substeps = 1  # 2
         up_axis = 1  # 0 is y, 1 is z
-
         class physx(LeggedRobotCfg.sim.physx):
             num_threads = 10
             solver_type = 1  # 0: pgs, 1: tgs
@@ -190,14 +150,13 @@ class long_config(LeggedRobotCfg):
         dynamic_randomization = 0.02
 		# dynamic randomization
         # action_delay = 0.5
-        #action_noise = 0.02
+        # action_noise = 0.02
 
     class commands(LeggedRobotCfg.commands):
         # Vers: lin_vel_x, lin_vel_y, ang_vel_yaw, heading (in heading mode ang_vel_yaw is recomputed from heading error)
         num_commands = 4
         resampling_time = 8.  # time before command are changed[s]
         heading_command = True  # if true: compute ang vel command from heading error
-
         class ranges:
             lin_vel_x = [-0.3, 0.6]  # min max [m/s]
             lin_vel_y = [-0.3, 0.3]   # min max [m/s]
@@ -261,7 +220,6 @@ class long_config(LeggedRobotCfg):
         clip_observations = 18.
         clip_actions = 18.
 
-
 class long_configPPO(LeggedRobotCfgPPO):
     seed = 5
     runner_class_name = 'OnPolicyRunner'   # DWLOnPolicyRunner
@@ -284,7 +242,6 @@ class long_configPPO(LeggedRobotCfgPPO):
         algorithm_class_name = 'PPO'
         num_steps_per_env = 60  # per iteration
         max_iterations = 30001  # number of policy updates
-
         # logging
         save_interval = 1000  # Please check for potential savings every `save_interval` iterations.
         experiment_name = 'long_ppo'
