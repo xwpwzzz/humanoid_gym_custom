@@ -6,5 +6,5 @@
 logs/*
 !logs/.gitkeep
 humanoid/wandb/*
-humanoid/scripts/*
-!humanoid/scripts/.gitkeep
+humanoid/scripts/policies
+!humanoid/scripts/policies/.gitkeep
